@@ -5,6 +5,7 @@ import Home from './pages/Home';
 
 import Navbar from './components/Navbar';
 import LoginPage from './pages/LoginPage';
+import MoviePage from './pages/MoviePage';
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home/>}></Route>
         <Route path='/login' element={<LoginPage/>}></Route>
-        
+        <Route path='/movies/:id' element={<MoviePage/>}/>
       </Routes>
     </div>
   );

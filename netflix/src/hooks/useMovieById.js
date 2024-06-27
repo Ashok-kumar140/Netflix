@@ -7,13 +7,14 @@ import { setTrailerMovie } from "../redux/slices/movieSlice";
 
 const useMovieById = async (movieId) => {
   const dispatch = useDispatch();
+  // console.log("MID",movieId);
   
   useEffect(() => {
     const getMovieById = async () => {
       try {
         const res = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/videos`, options);
 
-        console.log(res.data.results);
+        // console.log(res.data.results);
         const trailer = res?.data?.results?.filter((item) => {
           return item.type === "Trailer";
         })

@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import MoviesList from "./MoviesList";
 import { options } from "../utils/constants";
 import axios from "axios";
 import SearchMoviList from './SearchMoviList';

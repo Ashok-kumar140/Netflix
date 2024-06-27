@@ -13,7 +13,7 @@ const HomeVideoContainer = () => {
   return (
     <div>
         <VideoTitle title={title} overview={overview}/>
-        <BackgroundVideo movieId={id}/>
+        <BackgroundVideo movieId={id} bool={false}/>
     </div>
   )
 }

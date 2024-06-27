@@ -4,15 +4,19 @@ import logo from "../assets/logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUser } from "../redux/slices/authSlice";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import { setToggle } from "../redux/slices/movieSlice";
-
+import { matchPath } from "react-router";
 const Navbar = () => {
   const { user } = useSelector((state) => state.auth);
   const { toggle } = useSelector((state) => state.movie);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const path = location.pathname;
+  console.log("PAY",path);
+  
 
   const hanldeLogout = () => {
     dispatch(setToken(null));
@@ -50,12 +54,15 @@ const Navbar = () => {
               Home
             </button>
           ) : (
-            <button
+            
+              
+              <button
               className="bg-red-600 p-2 rounded-md text-white"
               onClick={hanldeSearchBtn}
             >
               Search Movies
             </button>
+            
           )}
         </div>
       )}

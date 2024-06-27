@@ -70,16 +70,16 @@ const LoginForm = ({setIsLogin}) => {
 
                 <div className='relative'>
                     <label htmlFor='password' className='label-style'>User Password: <sup className='text-red-700'>*</sup></label>
-                    <input type='text' id='password' name='password' placeholder='Enter your password' 
+                    <input type={`${!showPassword?"password":"text"}`} id='password' name='password' placeholder='Enter your password' 
                     value={formData.password}
                     onChange={handleOnChange}
                     required
                     className='input-field-style'/>
                     {
-                        showPassword?(
-                            <MdOutlineRemoveRedEye className='absolute top-[20%]'/>
+                        !showPassword?(
+                            <MdOutlineRemoveRedEye className='absolute top-[40px] right-[20px] text-white' onClick={()=>setShowPassword(!showPassword)}/>
                         ):(
-                            <FaRegEyeSlash className='absolute top-0'/>
+                            <FaRegEyeSlash className='absolute top-[40px] right-[20px] text-white' onClick={()=>setShowPassword(!showPassword)}/>
                         )
                     }
                 </div>
