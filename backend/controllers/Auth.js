@@ -5,10 +5,10 @@ require("dotenv").config();
 
 exports.signupUser = async(req,res)=>{
     try{
-        const {email,userName,password} = req.body;
+        const {email,userName,password,confirmPassword} = req.body;
         
 
-        if(!email || !userName || !password){
+        if(!email || !userName || !password ||!confirmPassword){
             return res.status(403).json({
                 success:false,
                 message:"All fields are required"
@@ -20,6 +20,13 @@ exports.signupUser = async(req,res)=>{
             return res.status(401).json({
                 success:false,
                 message:"User already exist"
+            })
+        }
+
+        if(password!==confirmPassword){
+            return res.status(401).json({
+                success:false,
+                message:"Password didn't match"
             })
         }
         
@@ -79,21 +86,17 @@ exports.loginUser = async(req,res)=>{
         }
 
         const payload = {
-            email: email,
             id: user._id
         }
 
-        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "24h" })
+        const token = await jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "24h" })
 
         // user = user.toObject();
 
         user.token = token;
         user.password = undefined;
-        const options = {
-            expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-            httpOnly: true
-        }
-        return res.cookie("token", token, options).status(200).json({
+        
+        return res.status(200).json({
             success: true,
             message: "user logged in successfully",
             user

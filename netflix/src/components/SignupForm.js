@@ -8,6 +8,7 @@ const SignupForm = ({setIsLogin}) => {
     email: "",
     password: "",
     userName: "",
+    confirmPassword:""
   });
 
   const handleFormSubmit = async(e) => {
@@ -81,6 +82,22 @@ const SignupForm = ({setIsLogin}) => {
             required
             placeholder="Enter your password"
             value={formData.password}
+            onChange={handleOnChange}
+            className="input-field-style"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="confirmPassword" className="label-style">
+            Confirm Password: <sup className="text-red-700">*</sup>
+          </label>
+          <input
+            type="text"
+            id="confirmPassword"
+            name="confirmPassword"
+            required
+            placeholder="Renter your password"
+            value={formData.confirmPassword}
             onChange={handleOnChange}
             className="input-field-style"
           />
