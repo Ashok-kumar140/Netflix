@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import {  useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
 import useTopRatedMovies from "../hooks/useTopRatedMovies";
@@ -8,12 +8,13 @@ import usePopularMovies from "../hooks/usePopularMovies";
 import MovieContainer from "../components/MovieContainer";
 import SearchMovies from "../components/SearchMovies";
 import HomeVideoContainer from "../components/HomeVideoContainer";
+import { setOpen } from "../redux/slices/movieSlice";
 
 const Home = () => {
-  const user = useSelector(store => store.auth.user);
-  const toggle = useSelector(store => store.movie.toggle);
+  const user = useSelector((store) => store.auth.user);
+  const toggle = useSelector((store) => store.movie.toggle);
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   // my custom hooks
   useNowPlayingMovies();
   usePopularMovies();
@@ -21,9 +22,11 @@ const Home = () => {
   useUpcomingMovies();
 
   useEffect(() => {
-      if (!user) {
-          navigate("/");
-      }
+    if (!user) {
+      navigate("/login");
+    }
+    dispatch(setOpen(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>
@@ -31,7 +34,7 @@ const Home = () => {
         <SearchMovies />
       ) : (
         <>
-          <HomeVideoContainer/>
+          <HomeVideoContainer />
           <MovieContainer />
         </>
       )}

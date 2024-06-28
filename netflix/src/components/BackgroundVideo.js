@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 const BackgroundVideo = ({ movieId, bool }) => {
   const { trailerMovie } = useSelector((state) => state.movie);
-  useMovieById(movieId);
+  // useMovieById(movieId);
   // console.log("Trailer",trailerMovie);
 
   return (

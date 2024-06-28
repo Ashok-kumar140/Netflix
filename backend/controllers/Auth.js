@@ -23,6 +23,17 @@ exports.signupUser = async(req,res)=>{
             })
         }
 
+        const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+
+        if(!email.match(regex)){
+
+            return res.status(401).json({
+                success:false,
+                message:"Email is not valid"
+            })
+
+        }
+
         if(password!==confirmPassword){
             return res.status(401).json({
                 success:false,

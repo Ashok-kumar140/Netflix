@@ -1,6 +1,6 @@
 
 import axios from "axios";
-import { Now_Playing_Movie, options } from "../utils/constants";
+import {options } from "../utils/constants";
 import {useDispatch} from "react-redux";
 import { setNowPlayingMovies } from "../redux/slices/movieSlice";
 

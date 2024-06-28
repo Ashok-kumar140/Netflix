@@ -3,22 +3,29 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpen } from "../redux/slices/movieSlice";
 import BackgroundVideo from "./BackgroundVideo";
+import { useLocation } from "react-router-dom";
 
 export default function MovieDialog() {
   //   const [open, setOpen] = React.useState(false);
   const { open } = useSelector((state) => state.movie);
   const { id } = useSelector((state) => state.movie);
   const { trailerMovie } = useSelector((state) => state.movie);
-  console.log("tr", trailerMovie);
+  const location = useLocation();
+  // console.log("tr", trailerMovie);
   const dispatch = useDispatch();
   const handleClose = () => {
     dispatch(setOpen(false));
   };
+
+  React.useEffect(()=>{
+    if(location.pathname==='/'){
+      setOpen(false);
+    }
+  },[location.pathname])
 
   return (
     <React.Fragment>

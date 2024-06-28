@@ -2,11 +2,17 @@ import React, { useState } from "react";
 import { options } from "../utils/constants";
 import axios from "axios";
 import SearchMoviList from './SearchMoviList';
+import {useDispatch, useSelector} from 'react-redux';
+import {setSearchMovieDetails} from '../redux/slices/searchMovieSlice';
 const SearchMovies = () => {
   const [searchMoviesArray,setSearchMoviesArray]= useState([]);
   const [searchQuery,setSearchQuery] = useState("");
+  const dispatch = useDispatch();
+  // eslint-disable-next-line
   const [loading, setLoading] = useState(false);
-  // const { movieName, searchedMovie } = useSelector(store => store.searchMovie);
+  const {movieName,searchedMovie} = useSelector((state)=>state.search)
+
+  console.log("Searched Movie",searchedMovie);
 
 
   const SearchHandler = async(e)=>{
@@ -16,7 +22,8 @@ const SearchMovies = () => {
       const {data} = await axios.get(`https://api.themoviedb.org/3/search/movie?query=${searchQuery}&include_adult=false&language=en-US&page=1`,options);
       console.log("SEARCH RESULT",data);
       setSearchMoviesArray(data?.results);
-
+      const movies = data?.results;
+      dispatch(setSearchMovieDetails({searchMovie:searchQuery, movies:movies}));
 
     }catch(error){
       console.log("Error while searching your query");
@@ -43,11 +50,11 @@ const SearchMovies = () => {
           </div>
         </form>
       </div>
-      {searchMoviesArray.length>0 ? (
+      {searchedMovie?.length>0 ? (
         <SearchMoviList
-          heading={searchQuery}
+          heading={movieName}
           // searchMovie={true}
-          moviesArray={searchMoviesArray}
+          moviesArray={searchedMovie}
         />
       ) : (
         <h1 className="text-white min-h-[80vh] bg-black opacity-90 text-center flex items-center justify-center text-3xl">Movie Not Found!!</h1>

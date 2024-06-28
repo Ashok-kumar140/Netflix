@@ -24,6 +24,7 @@ const useMovieById = async (movieId) => {
       }
     }
     getMovieById();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
 }

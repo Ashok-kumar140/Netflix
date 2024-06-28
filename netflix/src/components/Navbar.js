@@ -4,18 +4,16 @@ import logo from "../assets/logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUser } from "../redux/slices/authSlice";
 import toast from "react-hot-toast";
-import { useNavigate,useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { setToggle } from "../redux/slices/movieSlice";
-import { matchPath } from "react-router";
 const Navbar = () => {
   const { user } = useSelector((state) => state.auth);
   const { toggle } = useSelector((state) => state.movie);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
-  const path = location.pathname;
-  console.log("PAY",path);
+
+
   
 
   const hanldeLogout = () => {
@@ -29,6 +27,7 @@ const Navbar = () => {
 
   const hanldeSearchBtn = () => {
     dispatch(setToggle());
+    navigate('/')
   };
   return (
     <div className=" fixed z-30 w-full flex items-center justify-between p-2 bg-gradient-to-br from-black">

@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+
+import React, { useEffect, useState} from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import ReactPlayer from "react-player";
 import axios from "axios";
 import { TMDB_IMG_URL, options } from "../utils/constants";
-import { useDispatch } from "react-redux";
-import { getId, setOpen, setTrailerMovie } from "../redux/slices/movieSlice";
-import BackgroundVideo from "../components/BackgroundVideo";
-import useMovieById from "../hooks/useMovieById";
+import { useDispatch, useSelector } from "react-redux";
+import { getId, setOpen } from "../redux/slices/movieSlice";
 
 const MoviePage = () => {
   const { id } = useParams();
@@ -14,6 +12,14 @@ const MoviePage = () => {
   const [movie, setMovie] = useState({});
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const user = useSelector((store) => store.auth.user);
+
+  useEffect(()=>{
+    if(!user){
+      navigate('/login');
+    }
+  })
+ 
   const getMovieDetails = async (req, res) => {
     setLoading(true);
     try {
@@ -21,7 +27,7 @@ const MoviePage = () => {
         `https://api.themoviedb.org/3/movie/${id}`,
         options
       );
-      console.log("DATA", data);
+      // console.log("DATA", data);
       setMovie(data);
     } catch (error) {
       console.log("Error while fetching movie details");
@@ -31,10 +37,11 @@ const MoviePage = () => {
 
   useEffect(() => {
     getMovieDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleWatchBtn = () => {
-    dispatch(getId(id));
+    // dispatch(getId(id));
     dispatch(setOpen(true));
   };
 
@@ -43,7 +50,7 @@ const MoviePage = () => {
       {loading === true ? (
         <div className="spinner">Loading...</div>
       ) : (
-        <div className="max-w-[80vw] mx-auto bg-black opacity-90 text-white flex flex-col items-center justify-start min-h-screen pt-20 gap-3">
+        <div className="max-w-[90vw] md:max-w-[70vw] lg:max-w-[60vw] mx-auto bg-black opacity-90 text-white flex flex-col items-center justify-start min-h-screen pt-20 gap-3">
           <img
             src={`${TMDB_IMG_URL}/${movie.poster_path}`}
             alt="movie-banner"
@@ -52,17 +59,45 @@ const MoviePage = () => {
           ></img>
           <h1 className="text-3xl font-bold">{movie.original_title}</h1>
           <p className=" mt-4">{movie.overview}</p>
-
+          <div>
+            <span className="font-semibold opacity-95">Genres:</span>{" "}
+            {movie && movie?.genres?.map((item,index) => <span className="opacity-60" key={index}>{item.name}{", "}</span>)}
+          </div>
           <div className="grid grid-cols-4 gap-10">
-            <p><span className="font-semibold opacity-90">Langauge:</span> {movie.original_language}</p>
-            <p><span className="font-semibold opacity-90">Release date:</span> {movie.release_date}</p>
-            <p><span className="font-semibold opacity-90">Origin country:</span> {movie.origin_country}</p>
-            <p><span className="font-semibold opacity-90">Popularity:</span> {movie.popularity}</p>
-            <p><span className="font-semibold opacity-90">Budget:</span> {movie.budget}$</p>
-            <p><span className="font-semibold opacity-90">IMDB ID:</span> {movie.imdb_id}</p>
-            <p><span className="font-semibold opacity-90">Duration:</span> {movie.runtime} min</p>
-            <p><span className="font-semibold opacity-90">Production company:</span> {movie.production_companies?.[0].name}</p>
-
+            <p>
+              <span className="font-semibold opacity-90">Langauge:</span>{" "}
+              {movie.original_language}
+            </p>
+            <p>
+              <span className="font-semibold opacity-90">Release date:</span>{" "}
+              {movie.release_date}
+            </p>
+            <p>
+              <span className="font-semibold opacity-90">Origin country:</span>{" "}
+              {movie.origin_country}
+            </p>
+            <p>
+              <span className="font-semibold opacity-90">Popularity:</span>{" "}
+              {movie.popularity}
+            </p>
+            <p>
+              <span className="font-semibold opacity-90">Budget:</span>{" "}
+              {movie.budget}$
+            </p>
+            <p>
+              <span className="font-semibold opacity-90">IMDB ID:</span>{" "}
+              {movie.imdb_id}
+            </p>
+            <p>
+              <span className="font-semibold opacity-90">Duration:</span>{" "}
+              {movie.runtime} min
+            </p>
+            <p>
+              <span className="font-semibold opacity-90">
+                Production company:
+              </span>{" "}
+              {movie.production_companies?.[0].name}
+            </p>
           </div>
           <div className="flex gap-3 md:gap-5">
             <button
