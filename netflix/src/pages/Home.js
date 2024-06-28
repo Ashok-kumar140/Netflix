@@ -9,6 +9,7 @@ import MovieContainer from "../components/MovieContainer";
 import SearchMovies from "../components/SearchMovies";
 import HomeVideoContainer from "../components/HomeVideoContainer";
 import { setOpen } from "../redux/slices/movieSlice";
+import useMovieById from "../hooks/useMovieById";
 
 const Home = () => {
   const user = useSelector((store) => store.auth.user);
@@ -20,6 +21,7 @@ const Home = () => {
   usePopularMovies();
   useTopRatedMovies();
   useUpcomingMovies();
+  // useMovieById()
 
   useEffect(() => {
     if (!user) {

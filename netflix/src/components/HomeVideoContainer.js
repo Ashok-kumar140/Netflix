@@ -8,7 +8,7 @@ const HomeVideoContainer = () => {
   const movie = useSelector(store=>store.movie?.nowPlayingMovies);
   if(!movie) return; // early return in react
  
-  const {overview, id, title} = movie[1];
+  const {overview, id, title} = movie[0];
   
   return (
     <div>

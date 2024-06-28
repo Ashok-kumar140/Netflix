@@ -34,7 +34,7 @@ const MovieCard = ({ posterPath,movieId,cardWidth}) => {
     }
   
     return (
-      <div className={` mx-2 hover:scale-105 transition-all duration-300 w-${cardWidth}`}
+      <div className={` mx-2 hover:scale-105 transition-all duration-300 w-${cardWidth} `}
       onClick={handleOpen}
       >
         <img src={`${TMDB_IMG_URL}/${posterPath}`} alt="movie-banner" loading='lazy' />
