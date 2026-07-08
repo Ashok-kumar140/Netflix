@@ -15,7 +15,7 @@ exports.signupUser = async(req,res)=>{
             })
         }
 
-        const userExists = await User.findOne({email:email});
+        const userExists = await User.findOn({email:email});
         if(userExists){
             return res.status(401).json({
                 success:false,
@@ -34,7 +34,7 @@ exports.signupUser = async(req,res)=>{
 
         }
 
-        if(password!==confirmPassword){
+        if(password!==confirm){
             return res.status(401).json({
                 success:false,
                 message:"Password didn't match"
@@ -89,7 +89,7 @@ exports.loginUser = async(req,res)=>{
             })
         }
 
-        if (!await bcryptjs.compare(password, user.password)) {
+        if (!await bcryptjs.comp(password, user.password)) {
             return res.status(401).json({
                 success: false,
                 message: "password is wrong"
